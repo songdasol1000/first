@@ -17,7 +17,7 @@ function TodoList({ todos, handleRemove, handleToggle, handleModify }) {
         return (
         <TodoItem 
             todo={todo} 
-            key={key} 
+            key={todo._id} 
             handleRemove={handleRemove}
           //  handleUpdate={handleUpdate} 
             handleToggle={handleToggle}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState } from 'react';
 import {MdOutlineRadioButtonChecked, MdOutlineRadioButtonUnchecked, MdRemoveCircleOutline, MdUpgrade} from 'react-icons/md'
 import styled from 'styled-components';
@@ -66,13 +66,18 @@ const TodoItem = ({
     style,
  }) => {
 const {_id, text, checked} = todo;
-//const [input, setInput] = useState(false);
+const [input, setInput] = useState(text);
 //console.log(_id, text, checked);
+
+const handleChange = useCallback((e) => {
+    setInput(e.target.value);
+}, []);
 
     return (
         <TodoItemVirtualized style={style}>
     <TodoItemWrap checked={checked}>
-        <div className="checkbox" onClick={() => handleToggle({_id, checked})}> 
+        <div className="checkbox" 
+            onClick={() => handleToggle({id:_id, checked : !checked})}> 
         {checked ? (
             <MdOutlineRadioButtonChecked />
          ) : (
@@ -81,13 +86,11 @@ const {_id, text, checked} = todo;
         </div>
         <input 
             className='text'
-            value={text}
+            value={input}
             //기존에 있는 핸들코디파이를 
             //제출할 때 
-            onChange={(e) => { 
-                const text = e.target.value;
-                handleModify({_id, text})}
-            }
+            onChange={(e) => handleChange(e)}
+            onBlur={()=> handleToggle({id : _id, text : input})}
             readOnly={checked}
         />
         <div className="removeBtn" onClick={()=> handleRemove(_id)}> 

@@ -36,14 +36,13 @@ export const insert = createRequestThunk(INSERT_TODO, todoApi.insertTodo);
 //     checked: false,
 //     //publishedDate: moment().format("YYYY-MM-DD HH:MM")
 // }));
-export const toggle = createRequestThunk(TOGGLE_TODO, todoApi.toggleTodo);
+export const toggle = createRequestThunk(TOGGLE_TODO, todoApi.updateTodo);
 //createAction(TOGGLE, (id) => id);
 
 export const remove = createRequestThunk(DELETE_TODO, todoApi.deleteTodo);
 //createAction(REMOVE, (id) => id);
 
-export const modify = createRequestThunk(UPDATE_TODO, todoApi.updateTodo);
-//createAction(MODIFY, (id, text) => ({ id, text }));
+export const modify = createAction(MODIFY, (id, text) => ({ id, text }));
 
 export const loadTODOS = createAction(LOAD_TODOS, (todos) => todos);
 
@@ -87,27 +86,27 @@ const todoList = handleActions({ //action 비구조           //input : input
     [CHANGE_INPUT]: (state, { payload: input }) => ({ 
         ...state, input 
     }), //받은 매개변수는 action 안에 있음(payload : 화물)
-    [INSERT]: (state, { payload: todo }) => ({
-        ...state,
-        todos: state.todos.concat(todo) // 기존에 있던 값을 기억해야함 따라서 state.todos.concat
-    }),
+    // [INSERT]: (state, { payload: todo }) => ({
+    //     ...state,
+    //     todos: state.todos.concat(todo) // 기존에 있던 값을 기억해야함 따라서 state.todos.concat
+    // }),
     [TOGGLE]: (state, { payload }) => ({ // 원래는 페이로드를 받는데 그 페이로드가 뭔지 지정해주면 { payload : id} 이렇게하면 아래 id로 쓰면 됨
         ...state,
         todos: state.todos.map((todo) => todo.id === payload ? { ...todo, checked: !todo.checked } : todo)
     }),
-    [REMOVE]: (state, { payload: id }) => ({
-        ...state,
-        todos: state.todos.filter((todo) => todo.id !== id)
-    }),
+    // [REMOVE]: (state, { payload: id }) => ({
+    //     ...state,
+    //     todos: state.todos.filter((todo) => todo.id !== id)
+    // }),
     [MODIFY]: (state, { payload: { id, text } }) => ({
         ...state,
         todos: state.todos.map((todo) =>
             todo.id === id ? { ...todo, text } : todo)
     }),
-    [LOAD_TODOS]: (state, { payload: todos }) => ({
-        ...state,
-        todos
-    })
+    // [LOAD_TODOS]: (state, { payload: todos }) => ({
+    //     ...state,
+    //     todos
+    // })
 }, init
 );
 

@@ -39,11 +39,14 @@ function TodosContainer() {
         
         // }
         dispatch(fetchAllTodos());
-    }, []);
+        return ()=>{
+            //이 추드리스트 화면을 떠날 때, 지금 현재있는 상태를 req
+        }
+    }, [dispatch]);
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos));
-    }, [todos]);
+    // useEffect(() => {
+    //     localStorage.setItem('todos', JSON.stringify(todos));
+    // }, [todos]);
 
     return (
         <TodoTemplate>
